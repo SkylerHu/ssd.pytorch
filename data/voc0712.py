@@ -55,7 +55,7 @@ class VOCAnnotationTransform(object):
             temp = annotation.split()
             name = temp[1]
             # 只读两类
-            if not name in VOC_CLASSES:
+            if name not in VOC_CLASSES:
                 continue
             xmin = int(temp[2]) / width
             # 只读取V视角的
@@ -107,6 +107,7 @@ class VOCDetection(data.Dataset):
         self.anno_path_arr = list()
         if not isinstance(root, (list, tuple)):
             root = [root]
+        idx = 0
         for dir_name in root:
             img_dir = os.path.join(dir_name, 'Image')
             anno_dir = os.path.join(dir_name, 'Annotation')
@@ -125,6 +126,12 @@ class VOCDetection(data.Dataset):
                     continue
                 self.ids.append(img_path)
                 self.anno_path_arr.append(anno_path)
+                try:
+                    self.pull_item(idx)
+                    idx += 1
+                except Exception:
+                    self.ids = self.ids[:-1]
+                    self.anno_path_arr = self.anno_path_arr[:-1]
 
     def __getitem__(self, index):
         im, gt, h, w = self.pull_item(index)

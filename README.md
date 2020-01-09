@@ -29,3 +29,10 @@
 
 
 把预测出的位置画在图上，并保存在 ImageTarget目录中
+
+
+### 依赖文件下载
+
+http://blog-img.skylerhu.com/buaa/weight/cpu.pth
+http://blog-img.skylerhu.com/buaa/weight/gpu.pth
+http://blog-img.skylerhu.com/buaa/weight/vgg16_reducedfc.pth
